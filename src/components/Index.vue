@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar navbar-light bg-light">
       <div class="container-fluid">
-        <a href="#" class="navbar-brand">Emergencias Médicas</a>
+        <a href="#" class="navbar-brand">{{ tituloCustomizado }}</a>
       </div>
     </nav>
     <div class="container">
@@ -38,6 +38,11 @@ export default {
   name: "Index",
   props: { 
     msg: String
+  },
+  computed: {
+    tituloCustomizado() {
+      return `.: ${this.$store.state.titulo}`
+    }
   },
   components: {
     ConfiguracaoEquipe,

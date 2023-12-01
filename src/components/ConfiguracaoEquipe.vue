@@ -2,17 +2,19 @@
   <div>
     <div class="row">
       <div class="col">
-        <h5><i class="bi-boxes me-2"></i>Configuração da equipe</h5>
+        <h5><i class="bi-boxes me-2"></i>{{ tituloCustomizadoLocal }}</h5>
       </div>
     </div>
     <div class="row">
       <div class="col-8">
-        <p>Enfermeiro:</p>
-        <p>Socorrista:</p>
-        <p>Médico:</p>
-        <p>Carro:</p>
-        <p>Telefone:</p>
-        <p>Kit de reanimação:</p>
+        <!-- <p>Enfermeiro: {{ $store.state.equipe.enfermeiro }}</p> -->
+        <p>Enfermeiro: {{ enfermeiro }}</p>
+        <p>Socorrista: {{ socorrista }}</p>
+        <p>Médico: {{ medico }}</p>
+        <p>Carro: {{ carro }}</p>
+        <p>Telefone: {{ telefone }}</p>
+        <p>Kit de reanimação: {{ kitDeReanimacao }}</p>
+        
       </div>
       <div class="col-4 text-center">
         <div class="row">
@@ -31,7 +33,29 @@
 </template>
 
 <script>
+//mapState permite acesso ao store de forma direta
+import { mapState } from 'vuex'; 
+
 export default {
-  name: 'ConfiguracaoEquipe'
+  name: 'ConfiguracaoEquipe',
+  data: () => ({
+    titulo: 'Configuração de equipe'
+  }),
+  // computed: mapState(['equipe']) //Recupera de $store.state o atributo especificado no array para dimiuir a escrita de acesso ao mesmo.
+  computed: mapState({
+    //Função de callback
+    // equipe: state => state.equipe 
+    enfermeiro: state => state.equipe.enfermeiro,
+    socorrista: state => state.equipe.socorrista,
+    medico: state => state.equipe.medico,
+    carro: state => state.equipe.carro,
+    telefone: state => state.equipe.telefone,
+    kitDeReanimacao: state => state.equipe.kitDeReanimacao,
+    // Para usar propriedades locais com propriedades globais
+    // a propriedade vira um método computado que recebe o state como argumento e executa sua lógica
+    tituloCustomizadoLocal(state) {
+      return `${this.titulo} - ${state.equipe.carro}`
+    }
+  })
 }
 </script>
