@@ -27,8 +27,8 @@
               class="nav-link" 
               :to="{ 
                 name: 'equipamentos', 
-                params: { tipo: 'kit-de-reanimacao' }
-              }">Kit de Reanimação
+                params: { tipo: 'kits-de-reanimacao' }
+              }">Kits de Reanimação
             </router-link>
           </li>
         </ul>

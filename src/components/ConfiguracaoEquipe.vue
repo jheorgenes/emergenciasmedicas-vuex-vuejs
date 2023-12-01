@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div class="col">
-        <h5><i class="bi-boxes me-2"></i>{{ tituloCustomizadoLocal }}</h5>
+        <h5 :class="corTitulo"><i class="bi-boxes me-2"></i>{{ tituloCustomizadoLocal }}</h5>
       </div>
     </div>
     <div class="row">
@@ -42,20 +42,44 @@ export default {
     titulo: 'Configuração de equipe'
   }),
   // computed: mapState(['equipe']) //Recupera de $store.state o atributo especificado no array para dimiuir a escrita de acesso ao mesmo.
-  computed: mapState({
-    //Função de callback
-    // equipe: state => state.equipe 
-    enfermeiro: state => state.equipe.enfermeiro,
-    socorrista: state => state.equipe.socorrista,
-    medico: state => state.equipe.medico,
-    carro: state => state.equipe.carro,
-    telefone: state => state.equipe.telefone,
-    kitDeReanimacao: state => state.equipe.kitDeReanimacao,
-    // Para usar propriedades locais com propriedades globais
-    // a propriedade vira um método computado que recebe o state como argumento e executa sua lógica
-    tituloCustomizadoLocal(state) {
-      return `${this.titulo} - ${state.equipe.carro}`
+  // computed: mapState({
+  //   //Função de callback
+  //   // equipe: state => state.equipe 
+  //   enfermeiro: state => state.equipe.enfermeiro,
+  //   socorrista: state => state.equipe.socorrista,
+  //   medico: state => state.equipe.medico,
+  //   carro: state => state.equipe.carro,
+  //   telefone: state => state.equipe.telefone,
+  //   kitDeReanimacao: state => state.equipe.kitDeReanimacao,
+  //   // Para usar propriedades locais com propriedades globais
+  //   // a propriedade vira um método computado que recebe o state como argumento e executa sua lógica
+  //   tituloCustomizadoLocal(state) {
+  //     return `${this.titulo} - ${state.equipe.carro}`
+  //   }
+  // })
+
+  computed: {
+    /* Para usar o computed para propriedades globais e locais, é necessário definir o mapState com o spread operator para extrair as propriedades globais e espalhar no computed */
+    ...mapState({
+      enfermeiro: state => state.equipe.enfermeiro,
+      socorrista: state => state.equipe.socorrista,
+      medico: state => state.equipe.medico,
+      carro: state => state.equipe.carro,
+      telefone: state => state.equipe.telefone,
+      kitDeReanimacao: state => state.equipe.kitDeReanimacao,
+      tituloCustomizadoLocal(state) {
+        return `${this.titulo} - ${state.equipe.carro}`
+      }
+    }),
+    /* propriedade local computada */
+    corTitulo() {
+      let testeLogico = true;
+      if(testeLogico) {
+        return 'text-danger'
+      } else {
+        return 'text-primary'
+      }
     }
-  })
+  }
 }
 </script>
