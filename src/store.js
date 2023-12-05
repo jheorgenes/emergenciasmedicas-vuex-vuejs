@@ -4,12 +4,12 @@ export default new Vuex.Store({
   state: {
     titulo: 'Emergências Médicas',
     equipe: {
-      enfermeiro: 'Nome do enfermeiro',
-      socorrista: 'Nome do socorrista',
-      medico: 'Nome do médico',
-      carro: 'Placa do carro',
-      telefone: '+55 11 00000-0000',
-      kitDeReanimacao: 'Kit 0001'
+      enfermeiro: '',
+      socorrista: '',
+      medico: '',
+      carro: '',
+      telefone: '',
+      kitDeReanimacao: ''
     },
     enfermeiros: [
       { id: 1, nome: 'João', escala: '12x36' },
@@ -66,5 +66,32 @@ export default new Vuex.Store({
       // Turno recebido via closure.
       return turno => getters.socorristasPorTurno(turno).length;
     }
-  }
+  },
+  // Mutations são utilizadas para alterar o state de objetos globais controlados pelo vuex
+  mutations: {
+    // setItemEquipe: (state, item) => {
+    //   let t = item.tipo;
+    //   let d = item.dados;
+
+    //   if(t == 'enfermeiros') state.equipe.enfermeiro = d.nome;
+    //   if(t == 'socorristas') state.equipe.socorrista = d.nome;
+    //   if(t == 'medicos') state.equipe.medico = d.nome;
+    //   if(t == 'carros') state.equipe.carro = d.placa;
+    //   if(t == 'telefones') state.equipe.telefone = d.telefone;
+    //   if(t == 'kits-de-reanimacao') state.equipe.kitDeReanimacao = d.kit;
+    // }
+    // Extraindo via destructuring do payload o item
+    //setItemEquipe: (state, { item }) => {
+    setItemEquipe: (state, item) => {
+      let t = item.tipo;
+      let d = item.dados;
+
+      if(t == 'enfermeiros') state.equipe.enfermeiro = d.nome;
+      if(t == 'socorristas') state.equipe.socorrista = d.nome;
+      if(t == 'medicos') state.equipe.medico = d.nome;
+      if(t == 'carros') state.equipe.carro = d.placa;
+      if(t == 'telefones') state.equipe.telefone = d.telefone;
+      if(t == 'kits-de-reanimacao') state.equipe.kitDeReanimacao = d.kit;
+    }
+  },
 });
