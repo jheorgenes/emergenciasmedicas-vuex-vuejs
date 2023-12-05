@@ -10,7 +10,7 @@
               :to="{
                 name: 'profissionais',
                 params: { tipo: 'enfermeiros' }
-              }">Enfermeiros
+              }">Enfermeiros ({{ $store.getters.totalEnfermeiros }})
             </router-link>
           </li>
           <li class="nav-item">
@@ -19,7 +19,7 @@
               :to="{
                 name: 'profissionais',
                 params: { tipo: 'socorristas' }
-              }">Socorristas
+              }">Socorristas ({{ $store.getters.totalSocorristas }})
             </router-link>
           </li>
           <li class="nav-item">
