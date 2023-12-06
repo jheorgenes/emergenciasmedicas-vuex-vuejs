@@ -11,6 +11,7 @@ export default new Vuex.Store({
       telefone: '',
       kitDeReanimacao: ''
     },
+    equipes: [],
     enfermeiros: [],
     socorristas: [],
     medicos: [],
@@ -72,11 +73,40 @@ export default new Vuex.Store({
     setCarros: (state, payload) => {
       state.equipamentos.carros = payload;
     },
-    setTelefones: (state, { telefones }) => {
+    setTelefones: (state, telefones) => {
       state.equipamentos.telefones = telefones;
     },
     setKitsDeReanimacao: (state, payload) => {
       state.equipamentos.kitsDeReanimacao = payload;
+    },
+    adicionarEquipeEmEquipes: (state, payload) => {
+      state.equipes.push(payload);
+      state.equipe = {};
     }
   },
+  actions: {
+    fetchEquipamentos(context, { carros, telefones, kitsDeReanimacao }) {
+      fetch('http://localhost:3001/equipamentos')
+        .then(response => response.json())
+        .then(dados => {
+
+          if(carros) context.commit('setCarros', dados.carros);
+          if(telefones) context.commit('setTelefones', dados.telefones);
+          if(kitsDeReanimacao) context.commit('setKitsDeReanimacao', dados.kitsDeReanimacao);
+        });
+    },
+    fetchProfissionais(context) {
+      fetch('http://localhost:3001/enfermeiros')
+        .then(response => response.json())
+        .then(dados => context.commit('setEnfermeiros', dados));
+
+      fetch('http://localhost:3001/socorristas')
+        .then(response => response.json())
+        .then(dados => context.commit('setSocorristas', dados));
+
+      fetch('http://localhost:3001/medicos')
+        .then(response => response.json())
+        .then(dados => context.commit('setMedicos', dados));
+    }
+  }
 });

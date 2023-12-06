@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapActions } from 'vuex';
 
 import ConfiguracaoEquipe from '@/components/ConfiguracaoEquipe.vue';
 import Equipamentos from '@/components/Equipamentos.vue';
@@ -53,29 +53,57 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['setEnfermeiros', 'setSocorristas', 'setMedicos', 'setCarros', 'setTelefones', 'setKitsDeReanimacao'])
+    ...mapMutations([
+      'setEnfermeiros', 
+      'setSocorristas', 
+      'setMedicos', 
+      'setCarros', 
+      'setTelefones', 
+      'setKitsDeReanimacao'
+    ]),
+    // ...mapActions(['fetchEquipamentos', 'fetchProfissionais']),
+    // ...mapActions({
+    //   fetchEquipamentos: 'fetchEquipamentos', 
+    //   fetchProfissionais: 'fetchProfissionais'
+    // }),
+    ...mapActions({
+      fetchEquipamentos: (dispatch, payload) => {
+        // implementar lógica (assíncrona ou síncrona)
+        console.log('payload => ', payload);
+        dispatch('fetchEquipamentos', payload);
+        // outra lógica (assíncrona ou síncrona)
+      }, 
+      fetchProfissionais: dispatch => {
+        // implementar lógica
+        dispatch('fetchProfissionais');
+      }
+    }),
   },
   created() {
-    fetch('http://localhost:3001/enfermeiros')
-      .then(response => response.json())
-      // .then(dados => this.$store.commit('setEnfermeiros', dados));
-      .then(dados => this.setEnfermeiros(dados));
+    // fetch('http://localhost:3001/equipamentos')
+    //   .then(response => response.json())
+    //   .then(dados => {
+    //     this.$store.dispatch('adicionarEquipamentos', dados);
+    //   });
 
-    fetch('http://localhost:3001/socorristas')
-      .then(response => response.json())
-      .then(dados => this.setSocorristas(dados));
+    // Disparando Actions
+    // this.$store.dispatch('fetchEquipamentos');
+    // this.$store.dispatch('fetchProfissionais');
+    // this.$store.dispatch({ 
+    //   type: 'fetchEquipamentos',
+    //   carros: true,
+    //   telefones: true,
+    //   kitsDeReanimacao: true
+    // });
+    // this.$store.dispatch('fetchProfissionais');
 
-    fetch('http://localhost:3001/medicos')
-      .then(response => response.json())
-      .then(dados => this.setMedicos(dados));
+    this.fetchEquipamentos({
+      carros: true,
+      telefones: true,
+      kitsDeReanimacao: true
+    });
 
-    fetch('http://localhost:3001/equipamentos')
-      .then(response => response.json())
-      .then(dados => {
-        this.setCarros(dados.carros);
-        this.setTelefones(dados);
-        this.setKitsDeReanimacao(dados.kitsDeReanimacao);
-      });
+    this.fetchProfissionais();
   }
 }
 </script>
